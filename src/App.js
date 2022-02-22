@@ -1,21 +1,24 @@
 import "./styles.css";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Location from "./Location";
+import { GlobalStyle } from "./css/GlobalStyle";
+import Location from "./components/Location";
 import hospital from "./hospital";
+import Header from "./components/Header";
+import styled from "styled-components";
+
+const Inner = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
+`;
 
 export default function App() {
-  // const newData = hosPital.map((item, index) => {
-  //   return <li key={index}>{item.addr}</li>;
-  // });
-
   const hospitalData = hospital.map((item) => item.yadmnm);
-  const hospitalX = hospital.map((item) => item.xposwgs84);
-  const hospitalY = hospital.map((item) => item.yposwgs84);
-
   return (
     <div className="App">
-      <Location hospitalData={hospitalData} />
+      <Inner>
+        <GlobalStyle />
+        <Header />
+        <Location hospitalData={hospitalData} />
+      </Inner>
     </div>
   );
 }
