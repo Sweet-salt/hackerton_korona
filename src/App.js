@@ -1,24 +1,19 @@
+import React, { useState } from "react";
 import "./styles.css";
 import { GlobalStyle } from "./css/GlobalStyle";
-import Location from "./components/Location";
-import hospital from "./hospital";
 import Header from "./components/Header";
-import styled from "styled-components";
-
-const Inner = styled.div`
-  max-width: 1440px;
-  margin: 0 auto;
-`;
-
+import { Route, Routes } from "react-router-dom";
+import SearchHospital from "./routes/SearchHospital";
+import CheckList from "./routes/CheckList";
 export default function App() {
-  const hospitalData = hospital.map((item) => item.yadmnm);
   return (
     <div className="App">
-      <Inner>
-        <GlobalStyle />
-        <Header />
-        <Location hospitalData={hospitalData} />
-      </Inner>
+      <GlobalStyle />
+      <Header />
+      <Routes>
+        <Route path="/CheckList" element={<CheckList />} />
+        <Route path="/" element={<SearchHospital />} />
+      </Routes>
     </div>
   );
 }

@@ -12,6 +12,7 @@ video {
   text-align:left;
   vertical-align: baseline;
   box-sizing: border-box;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -62,12 +63,10 @@ span {
   font-size: inherit;
   line-height: inherit;
 }
-.wrapper {
-  font-family: "Roboto", sans-serif;
-  color: #111;
-  max-width: 1050px;
-  width: 100%;
+li{list-style:none;}
+.inner{
+  max-width: 1250px;
+  margin: 0 auto;
 }
-
 
 `;

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { markerdata } from "../HosData";
 import HospitalInfo from "./HospitalInfo";
 
-export default function Map() {
+export default function Location({ setHptName }) {
   const [hosinfo, setHosinfo] = useState([]);
 
   useEffect(() => {
@@ -26,7 +26,8 @@ export default function Map() {
           lon = position.coords.longitude; // 경도
 
         var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-          message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
+          message =
+            '<div style="color:#333; text-align:center; padding:10px; font-size:14px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
 
         // 마커와 인포윈도우를 표시합니다
         displayMarker(locPosition, message);
@@ -66,16 +67,27 @@ export default function Map() {
     let positions = markerdata;
     for (let i = 0; i < positions.length; i++) {
       // 마커를 생성합니다
+      let imageSrc = "https://cdn-icons-png.flaticon.com/512/1856/1856063.png"; // 마커이미지의 주소입니다
+      let imageSize = new kakao.maps.Size(44, 49); // 마커이미지의 크기입니다
+      let imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+      let markerImage = new kakao.maps.MarkerImage(
+        imageSrc,
+        imageSize,
+        imageOption
+      ); //마커 이미지 변경
+
+      // console.log(data2);
       let marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
         position: new kakao.maps.LatLng( //마커 위치
           positions[i].yposwgs84,
           positions[i].xposwgs84
         ),
-        clickable: true
+        clickable: true,
+        image: markerImage
       });
       //병원이름
-      let markerContent = positions[i].yadmnm;
+      let markerContent = `<div style='color:#333; text-align:center; padding:10px 17px; font-size:14px;max-width:150px;'>${positions[i].yadmnm}</div>`;
 
       // 마커에 표시할 인포윈도우를 생성합니다
       let infowindow = new kakao.maps.InfoWindow({
@@ -83,21 +95,21 @@ export default function Map() {
         removable: true
         // 인포윈도우에 표시할 내용
       });
+
       marker.setMap(map);
       // 마커에 클릭이벤트를 등록합니다
       kakao.maps.event.addListener(marker, "click", function () {
         // 마커 위에 인포윈도우를 표시합니다
         infowindow.open(map, marker);
 
-        setHosinfo(positions[i]);
+        setHptName(positions[i]);
       });
     }
   };
 
   return (
     <>
-      <div id="map" style={{ width: "1440px", height: "70vh" }} />
-      <HospitalInfo hosinfo={hosinfo} />
+      <div id="map" style={{ width: "calc(100% - 400px)", height: "auto" }} />
     </>
   );
 }
